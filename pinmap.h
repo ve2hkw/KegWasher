@@ -24,3 +24,4 @@
 #define AIR_PRESSURE 1
 #define CO2_PRESSURE 2
 #define ANALOG_TEMP 3
+#define DIG_TEMP_IN 15

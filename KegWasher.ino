@@ -1,10 +1,20 @@
+#include <DallasTemperature.h>
+
 #include "pinmap.h"
 #include "Kegwasher.h"
 #include <LiquidCrystal_PCF8574.h>
 #include <Adafruit_ADS1X15.h>
 #include <EEPROM.h>
 
+// Global declarations
+
 Adafruit_ADS1115 ads;
+
+volatile bool cycle = false;
+
+enum {kegSetup, rince, rinceWash, wash, washRince, }
+
+// Functions and stuff :)
 
 void setup() {
   ads.begin();
@@ -16,16 +26,36 @@ void setup() {
   pinMode(KEG_SENSOR_4, INPUT);
   pinMode(CYCLE_START_BUTTON, INPUT);
   pinMode(HEATER_SWITCH, INPUT);
+  pinMode(WATER_SUPPLY, OUTPUT);
+  pinMode(DRAIN_RETURN, OUTPUT);
+  pinMode(CAUSTIC_SUPPLY, OUTPUT);
+  pinMode(CAUSTIC_RETURN, OUTPUT);
+  pinMode(ACID_SUPPLY, OUTPUT);
+  pinMode(ACID_RETURN, OUTPUT);
+
 
 
 }
 
 void loop() {
   
+  // Check for cycle start button pressed
+  bool cycle_button = inputCheck(CYCLE_START_BUTTON);
+  if (cycle_button == true){
+    cycle = true; // Set the global variable to true to trigger cycle start
+  }
+
+  // Check if we are in a cycle
+  if (cycle == true){
+
+    wash();
+  }
 
 }
 
 void wash() {
+
+  swtich()
 
 }
 
