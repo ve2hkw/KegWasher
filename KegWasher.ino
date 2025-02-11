@@ -7,7 +7,6 @@
 Adafruit_ADS1115 ads;
 
 void setup() {
-  // put your setup code here, to run once:
   ads.begin();
   pinMode(CAUSTIC_LEVEL_SWITCH, INPUT);
   pinMode(ACID_LEVEL_SWITCH, INPUT);
@@ -22,7 +21,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
 
 }
 
@@ -30,14 +29,14 @@ void wash() {
 
 }
 
-bool fluidLevelCheck(int fluid) { //returns true if levels are okay, otherwise says we are in danger
-  if (digitalRead(fluid) == LOW){
+bool inputCheck(int input_number) { 
+  if (digitalRead(input_number) == LOW){
     return true;
   }
   else {
     return false;
   }
-} // end of level check
+} // end of input check
 
 bool pressureCheck() {
   memoryMap memory = getEEPROMValues();
@@ -77,7 +76,12 @@ pressureData pressureGet() {
 } // end of pressure data retrieval
 
 kegs numberOfKegsCheck() {
-
+  kegs good_kegs;
+  good_kegs.keg1 = inputCheck(KEG_SENSOR_1);
+  good_kegs.keg2 = inputCheck(KEG_SENSOR_2);
+  good_kegs.keg3 = inputCheck(KEG_SENSOR_3);
+  good_kegs.keg4 = inputCheck(KEG_SENSOR_4);
+  return good_kegs;
 }
 
 void resetEEPROMDefaults() {
